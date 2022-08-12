@@ -25,3 +25,4 @@ do
      make ${net}-cheetah -j4 
      make ${net}-SCI_HE -j4 
 done
+make frontend -j4

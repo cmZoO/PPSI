@@ -6,9 +6,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+# 1: frontend use silentot 0: frontend use iknp
+set(USE_CHEETAH 1)
+
 
 add_compile_options(-fPIC)
-add_compile_options(-D_GLIBCXX_USE_CXX11_ABI=0)
+# add_compile_options(-D_GLIBCXX_USE_CXX11_ABI=0)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 ## Dependencies
@@ -18,6 +21,7 @@ find_package(Eigen3 3.3.3 REQUIRED)
 find_package(SEAL REQUIRED)
 find_package(emp-tool REQUIRED)
 find_package(emp-ot REQUIRED)
+find_package(libPSI REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR}
                     ${EMP-OT_INCLUDE_DIRS} 
                     ${EMP-TOOL_INCLUDE_DIRS})
@@ -41,10 +45,15 @@ include_directories(SCI/src/)
 ## demo
 macro (add_network_cheetah _name)
   add_executable(${_name}-cheetah "networks/main_${_name}.cpp")
-  target_link_libraries(${_name}-cheetah gemini SCI-Cheetah)
-  target_compile_definitions(${_name}-cheetah PUBLIC SCI_OT=1 USE_CHEETAH=1)
+  target_compile_definitions(${_name}-cheetah PUBLIC SCI_OT=1 USE_CHEETAH=${USE_CHEETAH})
+  target_link_libraries(${_name}-cheetah oc::libPSI gemini SCI-Cheetah)
 endmacro()
 
 add_network_cheetah(resnet50)
 add_network_cheetah(sqnet)
 add_network_cheetah(densenet121)
+add_network_cheetah(libPSI)
+add_network_cheetah(batchkkot)
+add_network_cheetah(batchmill)
+
+add_subdirectory(frontend)

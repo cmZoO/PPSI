@@ -1028,7 +1028,7 @@ void Convolution(int32_t N, int32_t H, int32_t W, int32_t CIN, int32_t HF,
     chunks_per_thread = divide_instances(::num_threads, COUTF, min_chunk_size);
   }
 
-  std::cout << "chunks_per_thread[0]: " << chunks_per_thread[0] << endl;
+  std::cout << "chunks_per_thread[0]: " << chunks_per_thread[0] << std::endl;
   for (int g = 0; g < G; g++) {
     Conv2DReshapeInputGroup(N, H, W, CIN, HF, WF, HPADL, HPADR, WPADL, WPADR,
                             HSTR, WSTR, g, G, HF * WF * CINF, N * HOUT * WOUT,

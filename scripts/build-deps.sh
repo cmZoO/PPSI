@@ -64,7 +64,17 @@ cmake $DEPS_DIR/$target -DCMAKE_INSTALL_PREFIX=$BUILD_DIR -DCMAKE_PREFIX_PATH=$B
                         -DSEAL_THROW_ON_TRANSPARENT_CIPHERTEXT=ON
 make install -j4
 
-for deps in eigen3 emp-ot emp-tool hexl SEAL-3.7
+target=libPSI
+cd $DEPS_DIR/$target
+git checkout d9b7241 
+patch --quiet --no-backup-if-mismatch -N -p1 -i $WORK_DIR/patch/libPSI.patch -d $DEPS_DIR/libPSI/
+mkdir -p $BUILD_DIR/deps/$target
+cd $BUILD_DIR/deps/$target
+cmake $DEPS_DIR/$target -DCMAKE_INSTALL_PREFIX=$BUILD_DIR -DCMAKE_PREFIX_PATH=$BUILD_DIR -DSUDO_FETCH=OFF -DENABLE_ALL_PSI=ON -DFETCH_AUTO=ON -DPARALLEL_FETCH=12 -DCMAKE_BUILD_TYPE=Release
+make install -j4
+cp $BUILD_DIR/deps/$target/libPSI/config.h $BUILD_DIR/include/$target
+
+for deps in eigen3 emp-ot emp-tool hexl SEAL-3.7 libPSI
 do
   if [ ! -d $BUILD_DIR/include/$deps ] 
   then

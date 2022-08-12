@@ -123,5 +123,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# vscode
+*.vscode
+
+
 build
 # End of https://www.toptal.com/developers/gitignore/api/cmake,linux,macos,windows,c++

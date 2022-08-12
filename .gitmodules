@@ -19,3 +19,6 @@
 [submodule "sqnet_demo/imagenet-sample-images"]
 	path = sqnet_demo/imagenet-sample-images
 	url = https://github.com/EliSchwartz/imagenet-sample-images.git
+[submodule "deps/libPSI"]
+	path = deps/libPSI
+	url = https://github.com/osu-crypto/libPSI.git

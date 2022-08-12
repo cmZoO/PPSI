@@ -1,0 +1,29 @@
+diff --git a/libPSI/PSI/Kkrt/KkrtPsiReceiver.cpp b/libPSI/PSI/Kkrt/KkrtPsiReceiver.cpp
+index 4d9b931..26d65eb 100644
+--- a/libPSI/PSI/Kkrt/KkrtPsiReceiver.cpp
++++ b/libPSI/PSI/Kkrt/KkrtPsiReceiver.cpp
+@@ -52,7 +52,9 @@ namespace osuCrypto
+         mSenderSize = senderSize;
+         mRecverSize = recverSize;
+ 
+-        mIndex.init(std::max<u64>(200, recverSize), statSecParam, 0,3);
++        CuckooParam param = CuckooParam{ 0, 1.27, 3, std::max<u64>(200, recverSize) };
++        mIndex.init(param);
++        std::cout << "libPSI recv scale:" << mIndex.mParams.mBinScaler << std::endl;
+ 
+         //mNumStash = get_stash_size(recverSize);
+ 
+diff --git a/libPSI/PSI/Kkrt/KkrtPsiSender.cpp b/libPSI/PSI/Kkrt/KkrtPsiSender.cpp
+index cfc607f..920806e 100644
+--- a/libPSI/PSI/Kkrt/KkrtPsiSender.cpp
++++ b/libPSI/PSI/Kkrt/KkrtPsiSender.cpp
+@@ -50,7 +50,8 @@ namespace osuCrypto
+         auto fu = chl.asyncRecv((u8*)&theirHashingSeeds, sizeof(block));
+ 
+         // init Simple hash
+-        mParams = CuckooIndex<>::selectParams(std::max<u64>(200, recverSize), statSec, 0,3);
++        mParams = CuckooParam{ 0, 1.27, 3, std::max<u64>(200, recverSize) };
++        std::cout << "libPSI sender scale:" << mParams.mBinScaler << std::endl;
+         if (mParams.mNumHashes != 3) throw std::runtime_error(LOCATION);
+ 
+         otSend.configure(false, 40, 128);
