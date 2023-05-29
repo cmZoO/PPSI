@@ -1,7 +1,7 @@
 # Predicate Private Set Intersection With Linear Complexity
 
 ### Introduction
-This directory contains the code for "Predicate Private Set Intersection With Linear Complexity".
+This directory contains the code for "[Predicate Private Set Intersection With Linear Complexity](https://link.springer.com/chapter/10.1007/978-3-031-33491-7_6)".
 
 ### Repo Directory Description
 - `include/` Contains implementation of PPSI's batch millionaires protocol.
